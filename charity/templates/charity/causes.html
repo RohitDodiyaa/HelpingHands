@@ -1,0 +1,20 @@
+{% extends 'charity/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="causes-section" style="background: url('https://nss-new-add-media.s3.ap-south-1.amazonaws.com/NSS_USA_site/2023/10/16104028/blogThe-Different-Types-of-NGOs.jpg') no-repeat center center/cover; padding: 50px 0;">
+    <div class="container" style="background-color: rgba(255, 255, 255, 0.85); padding: 20px; border-radius: 10px;">
+        <h2 class="section-title" style="color: black !important;">CAUSES</h2>
+        <div class="causes-list">
+            {% for cause in causes %}
+            <div class="cause-item">
+                <h3>{{ cause.title }}</h3>
+                <p>{{ cause.description }}</p>
+            </div>
+            {% empty %}
+            <p>No causes available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

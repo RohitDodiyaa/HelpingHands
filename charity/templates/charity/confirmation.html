@@ -1,0 +1,18 @@
+{% extends 'charity/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="confirmation-section">
+    <div class="container">
+        <h2>Thank You for Your Donation!</h2>
+        <div class="donation-details">
+            <p><strong>Name:</strong> {{ donation.name }}</p>
+            <p><strong>Email:</strong> {{ donation.email }}</p>
+            <p><strong>Phone:</strong> {{ donation.phone }}</p>
+            <p><strong>Amount:</strong> ₹{{ donation.amount }}</p>
+        </div>
+        <p class="appreciation-text">We appreciate your support.</p>
+        <a href="{% url 'home' %}" class="btn-primary">Return Home</a>
+    </div>
+</section>
+{% endblock %}

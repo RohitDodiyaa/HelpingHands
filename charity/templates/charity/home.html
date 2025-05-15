@@ -1,0 +1,114 @@
+{% extends 'charity/base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Hero Banner -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>HELP THOUSANDS OF HOMELESS CHILDREN TO BUILD GOOD HOUSES</h2>
+                <p class="hero-slogan">Alone we can do so little together we can do so much</p>
+                <div class="hero-buttons">
+                    <a href="{% url 'causes' %}" class="btn-primary">SPONSOR NOW</a>
+                    <a href="{% url 'donation_form' %}" class="btn-primary" style="margin-left: 10px;">DONATE</a>
+                    <a href="{% url 'events' %}" class="btn-secondary">OTHER PROJECTS</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Help Section -->
+    <section class="help-section">
+        <div class="container">
+            <h2 class="section-title">HOW YOU COULD HELP</h2>
+            <p class="section-subtitle">WE HELP THOUSANDS OF CHILDREN TO GET THEIR EDUCATION<br>NOW WE NEED YOUR HELP TO CONTINUE THIS</p>
+            
+            <div class="help-options">
+                {% for cause in causes|slice:":3" %}
+                <div class="help-card">
+                    {% comment %} Add an image placeholder or icon for cause {% endcomment %}
+                    <div class="cause-image">
+                        {% if forloop.first %}
+                        <img src="https://blog.enduramaxx.co.uk/hubfs/How-To-Keep-Drinking-Water-Clean-And-Fresh.jpg" alt="clean water drinking" width="300" height="200" />
+                        {% elif forloop.counter == 2 %}
+                        <img src="http://www.speedlabs.in/blog/wp-content/uploads/2021/06/Blog-no-39-Image-02.jpg" alt="education for all" width="300" height="200" />
+                        {% else %}
+                        <img src="https://images.yourstory.com/cs/wordpress/2016/06/Healthcare-01.jpg?mode=crop&crop=faces&ar=2%3A1&format=auto&w=1920&q=75" alt="health care" width="300" height="200" />
+                        {% endif %}
+                    </div>
+                    <i class="{{ cause.icon }}"></i>
+                    <h3>{{ cause.title }}</h3>
+                    <p>{{ cause.description|truncatewords:20 }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest News Section -->
+    <section class="news-section">
+        <div class="container">
+            <h2 class="section-title">LATEST NEWS AT HELPING HANDS</h2>
+            
+            <div class="news-grid">
+                {% for item in news %}
+                <article class="news-card">
+                    <div class="news-image" style="{% if item.image %}background-image: url('{{ item.image.url }}');{% endif %}"></div>
+                    <div class="news-content">
+                        <h3>{{ item.title }}</h3>
+                        <div class="news-meta">
+                            <span class="author">{{ item.author }}</span>
+                            <span class="date">{{ item.date|date:"F j, Y" }}</span>
+                        </div>
+                        <p>{{ item.content|truncatewords:20 }}</p>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events Section -->
+    <section class="events-section">
+        <div class="container">
+            <h2 class="section-title">UPCOMING & RECENT EVENTS</h2>
+            <p class="section-intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam malesuada dapibus diam, ut fringilla purus efficitur eget.</p>
+            
+            <div class="events-list">
+                {% for event in events %}
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="day">{{ event.date|date:"d" }}</span>
+                        <span class="month">{{ event.date|date:"M" }}</span>
+                        <span class="year">{{ event.date|date:"Y" }}</span>
+                    </div>
+                    <div class="event-details">
+                        <h3>{{ event.title }}</h3>
+                        <p>{{ event.description|truncatewords:20 }}</p>
+                        <p class="location"><i class="fas fa-map-marker-alt"></i> {{ event.location }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Volunteer Section -->
+    <section class="volunteer-cta" id="volunteer-form">
+        <div class="container">
+            <div class="volunteer-content">
+                <h2>BECOME VOLUNTEER</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisc elit. Nam malesuada dapibus diam, ut fringilla purus efficitur eget irmspurings.</p>
+                
+                <form method="post" class="volunteer-form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn-primary">JOIN US NOW</button>
+                </form>
+                {% if registered_phone %}
+                <p class="registered-phone">Thank you for registering! Your mobile number: {{ registered_phone }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

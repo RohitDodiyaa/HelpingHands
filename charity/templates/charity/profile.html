@@ -1,0 +1,30 @@
+{% extends 'charity/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="profile-section">
+    <div class="container">
+        <h2>Your Profile</h2>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            {{ form.as_p }}
+            <button type="submit" class="btn-primary">Update Profile</button>
+        </form>
+
+        <h3>Your Donations</h3>
+        {% if donations %}
+            <ul class="donation-list">
+                {% for donation in donations %}
+                <li>
+                    Amount: ₹{{ donation.amount }} | Date: {{ donation.donation_date|date:"F j, Y" }} | Status: {{ donation.status }}
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You have not made any donations yet.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

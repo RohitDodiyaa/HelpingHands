@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helping H-A-N-D-S | {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'charity/css/style.css' %}">
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header>
+        <div class="container">
+            <h1 class="logo">HELPING <span>H-A-N-D-S</span></h1>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">HOME</a></li>
+                    <li><a href="#">DONATE</a></li>
+                    <li><a href="{% url 'causes' %}">CAUSES</a></li>
+                    <li><a href="#">PROJECTS</a></li>
+                    <li><a href="#">PAGES</a></li>
+                    <li><a href="#">SHOP</a></li>
+                    <li><a href="{% url 'contact' %}">CONTACT</a></li>
+                    <li><a href="#" class="btn-volunteer">BECOME VOLUNTEER</a></li>
+                    {% if user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'profile' %}" title="Profile">
+                                <i class="fas fa-user-circle" style="font-size: 1.5em;"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'logout' %}" title="Logout">Logout</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{% url 'login' %}" title="Login">
+                                <i class="fas fa-sign-in-alt" style="font-size: 1.5em;"></i>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <div class="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col about-col">
+                    <h3>ABOUT HELPING HANDS</h3>
+                    <p>Helping Hands is dedicated to improving the lives of homeless children by providing shelter, education, and healthcare. We believe every child deserves a safe and nurturing environment to grow and thrive.</p>
+                    <a href="#" class="read-more">KNOW MORE</a>
+                </div>
+                
+                <div class="footer-col posts-col">
+                    <h3>RECENT POSTS</h3>
+                    <ul class="recent-posts">
+                        {% for item in news|slice:":3" %}
+                        <li><a href="#">{{ item.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="footer-col social-col">
+                    <h3>FOLLOW US</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col contact-col">
+                    <h3>CONTACT US</h3>
+                    <p>123 Charity Street, Helping City, HC 12345</p>
+                    <p><i class="fas fa-phone"></i> +215 (123) 4567</p>
+                    <p><i class="fas fa-envelope"></i> info@helpinghands.com</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p style="color:black;">&copy; {% now "Y" %} Helping Hands. All Rights Reserved. Designed by Theme Designer.</p>
+                <p style="color:red; font-weight:bold;">Footer content loaded - test message</p>
+                <div class="footer-links">
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Disclaimer</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'charity/js/main.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const volunteerBtn = document.querySelector('.btn-volunteer');
+            if (volunteerBtn) {
+                volunteerBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const volunteerForm = document.getElementById('volunteer-form');
+                    if (volunteerForm) {
+                        volunteerForm.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
